@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       ClassRoom.hasMany(models.Student, {
-        foreignKey: "StudentId",
+        foreignKey: "ClassRoomId",
       });
     }
   }
