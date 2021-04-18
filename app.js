@@ -8,9 +8,9 @@ const PORT = process.env.SERVER_PORT || 8001;
 app.use(express.json());
 app.use(morgan("combined"));
 
-app.get("/", (req, res) => {
-  res.send("hi");
-});
+const StudentRoute = require("./routes/StudentRoute");
+
+app.use("/student", StudentRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
