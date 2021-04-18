@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Student.init(
     {
-      fname: DataTypes.STRING,
+      fName: DataTypes.STRING,
       mName: DataTypes.STRING,
       lName: DataTypes.STRING,
       email: DataTypes.STRING,
