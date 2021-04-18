@@ -1,18 +1,17 @@
-const { Score, GradeLevel, ClassRoom } = require("./db/models");
+require("dotenv").config();
+const express = require("express");
+const morgan = require("morgan");
 
-async function test() {
-  const score = await Score.findOne({
-    where: {
-      id: 3,
-    },
-  });
+const app = express();
+const PORT = process.env.SERVER_PORT || 8001;
 
-  const { fName } = await score.getStudent();
-  console.log(fName);
-}
+app.use(express.json());
+app.use(morgan("combined"));
 
-test()
-  .then(() => {})
-  .catch((err) => {
-    console.log(err);
-  });
+app.get("/", (req, res) => {
+  res.send("hi");
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
