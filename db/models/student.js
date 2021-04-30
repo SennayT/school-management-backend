@@ -1,5 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 module.exports = (sequelize, DataTypes) => {
   class Student extends Model {
     /**
@@ -25,6 +27,14 @@ module.exports = (sequelize, DataTypes) => {
       Student.hasMany(models.Score, {
         foreignKey: "StudentId",
       });
+    }
+
+    async generateToken() {
+      const secret = process.env.JWT_SECRET;
+      const id = this.id;
+
+      const token = jwt.sign({ id }, secret);
+      return token;
     }
   }
   Student.init(

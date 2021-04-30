@@ -1,5 +1,6 @@
 "use strict";
 const faker = require("faker");
+const bcrypt = require("bcrypt");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -44,8 +45,10 @@ module.exports = {
     const classRooms = await queryInterface.sequelize.query(
       'SELECT id,"GradeLevelId" FROM "ClassRooms"'
     );
-
-    const students = getStudents(classRooms[0]);
+    const defaultPassword = "password";
+    const hashedPassword = await bcrypt.hash(defaultPassword, 10);
+    console.log(hashedPassword);
+    const students = getStudents(classRooms[0], hashedPassword);
     await queryInterface.bulkInsert("Students", students, {});
   },
 
@@ -100,7 +103,7 @@ function getSubjects(levels) {
   return subjects;
 }
 
-function getStudents(classRooms) {
+function getStudents(classRooms, password) {
   const students = [];
 
   for (const classRoom of classRooms) {
@@ -110,7 +113,7 @@ function getStudents(classRooms) {
         mName: faker.name.middleName(),
         lName: faker.name.lastName(),
         email: faker.internet.email(),
-        password: "password",
+        password: password,
         birthdate: new Date(),
         imageAddress: "File Here",
         SemesterId: 1,
