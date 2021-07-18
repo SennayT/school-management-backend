@@ -13,7 +13,7 @@ const LoginController = async (req, res) => {
 
     if (student.length === 0) {
       return res.status(404).json({
-        error: "Invalid Emial or password",
+        error: "Invalid Email or password",
       });
     }
 
